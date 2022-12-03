@@ -1,4 +1,4 @@
-package org.j2lab.schemacache.config;
+package org.j2lab.schema_cache.config;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -37,7 +37,7 @@ public class KafkaConfig {
 
     @Bean("SchemaReceiver")
     public KafkaReceiver<Integer, String> SchemaReceiver() {
-        ReceiverOptions<Integer, String> receiverOptions = ReceiverOptions.<Integer, String>create(getConsumerProperties());
+        ReceiverOptions<Integer, String> receiverOptions = ReceiverOptions.create(getConsumerProperties());
         receiverOptions.subscription(Collections.singleton(schemaProperties.getTopic()));
         return KafkaReceiver.create(receiverOptions);
     }

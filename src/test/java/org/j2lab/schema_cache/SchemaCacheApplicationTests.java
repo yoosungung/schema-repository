@@ -1,4 +1,4 @@
-package org.j2lab.schemacache;
+package org.j2lab.schema_cache;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

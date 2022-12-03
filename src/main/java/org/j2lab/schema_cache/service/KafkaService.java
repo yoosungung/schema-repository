@@ -1,10 +1,9 @@
-package org.j2lab.schemacache.service;
+package org.j2lab.schema_cache.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.j2lab.schemacache.model.KafkaMessage;
-import org.j2lab.schemacache.model.KafkaResult;
-import org.j2lab.schemacache.model.Schema;
+import org.j2lab.schema_cache.model.KafkaMessage;
+import org.j2lab.schema_cache.model.SchemaResult;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.KafkaSender;
@@ -14,11 +13,11 @@ import reactor.kafka.sender.KafkaSender;
 public class KafkaService {
     private final KafkaSender<String, Object> producer;
 
-    public Mono<KafkaResult> send(KafkaMessage message) {
+    public Mono<SchemaResult> send(KafkaMessage message) {
         return producer.createOutbound()
                 .send(Mono.just(new ProducerRecord<>(message.getTopic(), message.getKey(), message.getMessage())))
                 .then()
-                .thenReturn(new KafkaResult(message))
-                .onErrorResume(error -> Mono.just(new KafkaResult(message, error)));
+                .thenReturn(new SchemaResult(message))
+                .onErrorResume(error -> Mono.just(new SchemaResult(message, error)));
     }
 }

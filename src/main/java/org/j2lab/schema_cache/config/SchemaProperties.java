@@ -1,4 +1,4 @@
-package org.j2lab.schemacache.config;
+package org.j2lab.schema_cache.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
