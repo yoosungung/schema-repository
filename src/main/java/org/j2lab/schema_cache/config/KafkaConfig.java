@@ -3,7 +3,6 @@ package org.j2lab.schema_cache.config;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -28,27 +27,29 @@ public class KafkaConfig {
 
     @Bean("KafkaSender")
     public KafkaSender<String, Object> kafkaSender() {
-        SenderOptions<String, Object> senderOptions = SenderOptions.create(getProducerProperties());
+        SenderOptions<String, Object> senderOptions = SenderOptions.create(this.getProducerProperties());
         senderOptions.scheduler(Schedulers.parallel());
         senderOptions.closeTimeout(Duration.ofSeconds(5));
         return KafkaSender.create(senderOptions);
 
     }
 
-    @Bean("SchemaReceiver")
-    public KafkaReceiver<Integer, String> SchemaReceiver() {
-        ReceiverOptions<Integer, String> receiverOptions = ReceiverOptions.create(getConsumerProperties());
-        receiverOptions.subscription(Collections.singleton(schemaProperties.getTopic()));
+    @Bean("KafkaReceiver")
+    public KafkaReceiver<String, String> kafkaReceiver() {
+        ReceiverOptions<String, String> receiverOptions = ReceiverOptions.<String, String>create(this.getConsumerProperties())
+                .subscription(Collections.singleton(schemaProperties.getTopic()));
         return KafkaReceiver.create(receiverOptions);
     }
 
     private Map<String, Object> getConsumerProperties() {
         return new HashMap<String, Object>() {{
             put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, properties.getBootstrapServers());
-            put(ConsumerConfig.GROUP_ID_CONFIG, schemaProperties.getGroupId());
-            put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class);
+            put(ConsumerConfig.GROUP_ID_CONFIG, schemaProperties.genGroupId());
+            put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
             put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
             put(ProducerConfig.MAX_BLOCK_MS_CONFIG, 1000);
+            put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+
         }};
     }
 

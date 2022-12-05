@@ -18,7 +18,7 @@ public class SchemaController {
         return schemaRepository.getById(id).map(result ->{
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(result.toJsonString());
+                    .body(result);
         });
     }
 
@@ -27,7 +27,7 @@ public class SchemaController {
         return schemaRepository.updateById(id, schema).map(result -> {
                 return ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(result.toJsonString());
+                        .body(result.toString());
             });
     }
 }

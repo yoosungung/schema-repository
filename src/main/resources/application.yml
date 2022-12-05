@@ -2,5 +2,5 @@ server:
   address: 0.0.0.0
   port: 8080
 schema:
-  Topic: "_schemas"
-  GroupId: group.schemas.consumer
+  topic: "_schemas"
+  groupId: group.schema_cache
