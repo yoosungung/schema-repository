@@ -1,4 +1,4 @@
-package org.j2lab.schema_cache;
+package org.j2lab.schema.repository;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,8 +7,8 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @EnableCaching
 @SpringBootApplication(exclude = MongoReactiveAutoConfiguration.class)
-public class SchemaCacheApplication {
+public class SchemaRepositoryApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(SchemaCacheApplication.class, args);
+		SpringApplication.run(SchemaRepositoryApplication.class, args);
 	}
 }

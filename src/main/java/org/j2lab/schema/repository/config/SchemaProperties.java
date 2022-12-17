@@ -1,4 +1,4 @@
-package org.j2lab.schema_cache.config;
+package org.j2lab.schema.repository.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,10 @@
-package org.j2lab.schema_cache.service;
+package org.j2lab.schema.repository.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.j2lab.schema_cache.model.SchemaRequest;
-import org.j2lab.schema_cache.model.SchemaResponse;
+import org.j2lab.schema.repository.model.SchemaRequest;
+import org.j2lab.schema.repository.model.SchemaResponse;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.KafkaSender;
@@ -11,7 +12,7 @@ import reactor.kafka.sender.KafkaSender;
 @Service
 @RequiredArgsConstructor
 public class SchemaSender {
-    private final KafkaSender<String, Object> producer;
+    private final KafkaSender<Long, JsonNode> producer;
 
     public Mono<SchemaResponse> send(SchemaRequest message) {
         return producer.createOutbound()

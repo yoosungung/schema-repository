@@ -1,4 +1,4 @@
-package org.j2lab.schema_cache.model;
+package org.j2lab.schema.repository.model;
 
 import lombok.Data;
 
