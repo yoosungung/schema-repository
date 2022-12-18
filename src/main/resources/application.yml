@@ -1,11 +1,12 @@
 server:
   address: 0.0.0.0
-  port: 8080
+  port: 8081
 
 schema:
   topic: "_schemas"
   groupId: group.schema
 
+spring:
   datasource:
     url: jdbc:h2:mem:schemadb
     driverClassName: org.h2.Driver
@@ -13,4 +14,10 @@ schema:
     password: j2lab123$
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-#    defer-datasource-initialization: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+        type.descriptor.sql: trace

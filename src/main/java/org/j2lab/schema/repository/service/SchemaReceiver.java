@@ -19,11 +19,9 @@ public class SchemaReceiver implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         receiver.receive()
                 .subscribe(receiverRecord ->{
-                    System.out.printf("Received message: %s\n", receiverRecord);
-                    Long id = receiverRecord.key();
-                    JsonNode schema = receiverRecord.value();
-                    if(id != null) {
-                        schemaRepository.save(new Schema(id, schema));
+                    JsonNode body = receiverRecord.value();
+                    if(body != null) {
+                        schemaRepository.save(new Schema(body));
                     }
                 });
     }

@@ -2,6 +2,7 @@ package org.j2lab.schema.repository.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.j2lab.schema.repository.model.SchemaRequest;
 import org.j2lab.schema.repository.model.SchemaResponse;

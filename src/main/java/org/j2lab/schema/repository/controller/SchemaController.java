@@ -21,7 +21,16 @@ public class SchemaController {
     private final SchemaSender schemaSender;
     private final SchemaRepository schemaRepository;
 
-    @GetMapping("/{id}")
+    @GetMapping("/types")
+    private Mono<ResponseEntity<String>> getTypes() {
+        return Mono.just(
+                ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body("[\"AVRO\"]")
+        );
+    }
+
+    @GetMapping("/ids/{id}")
     private Mono<ResponseEntity<String>> getSchemaById(@PathVariable long id) {
         Optional<Schema> schemaOptional = schemaRepository.findById(id);
         if(schemaOptional.isPresent()) {
@@ -32,24 +41,8 @@ public class SchemaController {
             );
         } else {
             return Mono.just(
-                    ResponseEntity.notFound()
-                            .build()
+                    ResponseEntity.notFound().build()
             );
         }
-    }
-
-    @PostMapping("/{id}")
-    private Mono<ResponseEntity<String>> postSchemaById(@PathVariable long id, @RequestBody JsonNode schema) {
-        Mono<SchemaResponse> schemaResponse = schemaSender.send(new SchemaRequest(id, schema));
-        return schemaResponse.map(resp -> {
-            if(resp.getError() == null){
-                return ResponseEntity.ok()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .body(resp.getMessage().getMessage().toString());
-            } else {
-                return ResponseEntity.internalServerError()
-                        .build();
-            }
-        });
     }
 }
